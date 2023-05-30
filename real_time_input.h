@@ -1,3 +1,6 @@
+#ifndef REAL_TIME_INPUT_H
+#define REAL_TIME_INPUT_H
+
 #include <iostream>
 using namespace std;
 
@@ -10,7 +13,7 @@ using namespace std;
     #error "Unknown operating system. Cannot compile :("
 #endif
 
-int main() {
+int real_time_input() {
     cout << "\nREAL TIME INPUT: PRESS 0 TO END PROGRAM" << endl;
 
     #ifdef _WIN32
@@ -38,7 +41,7 @@ int main() {
                 if (c == '0') {
                     break;
                 } else {
-                    cout << c << endl;;
+                    cout << c << endl;
                 }
             }
         }
@@ -48,3 +51,5 @@ int main() {
 
     return 0;
 }
+
+#endif
