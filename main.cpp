@@ -1,11 +1,35 @@
 #include <iostream>
+/* library to clear terminal */
+#include <cstdlib>
+
+#include "keyboard_print.h"
+
 using namespace std;
 
 #ifdef _WIN32
     #include <conio.h>
+    #include <windows.h> /* included this to be part of the windows terminal clear */
+    void windows_clear() {
+        HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+        COORD coordScreen = {0, 0};
+        DWORD cCharsWritten;
+        CONSOLE_SCREEN_BUFFER_INFO csbi;
+        DWORD dwConSize;
+
+        GetConsoleScreenBufferInfo(hConsole, &csbi);
+        dwConSize = csbi.dwSize.X * csbi.dwSize.Y;
+
+        FillConsoleOutputCharacter(hConsole, TEXT(' '), dwConSize, coordScreen, &cCharsWritten);
+        GetConsoleScreenBufferInfo(hConsole, &csbi);
+        FillConsoleOutputAttribute(hConsole, csbi.wAttributes, dwConSize, coordScreen, &cCharsWritten);
+        SetConsoleCursorPosition(hConsole, coordScreen);
+    }
 #elif defined(__APPLE__) || defined(__linux__)
     #include <termios.h>
     #include <unistd.h>
+    void mac_clear() {
+        cout << "\033[2J\033[1;1H";
+    }
 #else 
     #error "Unknown operating system. Cannot compile :("
 #endif
@@ -20,7 +44,8 @@ int main() {
                 if (c == '0') {
                     break;
                 } else {
-                    cout << c << endl;
+                    windows_clear();
+                    keyboard_print();
                 }
             }
         }
@@ -38,7 +63,8 @@ int main() {
                 if (c == '0') {
                     break;
                 } else {
-                    cout << c << endl;
+                    mac_clear();
+                    keyboard_print(c);
                 }
             }
         }
