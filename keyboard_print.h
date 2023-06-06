@@ -40,9 +40,9 @@ int build_up_single(char input_character, const char* row) {
     return 0;
 }
 int keyboard_print(char c) {
-    char top_row[] = "qwertyuiop";
-    char middle_row[] = "asdfghjkl";
-    char bottom_row[] = "zxcvbnm";
+    char top_row[] = "Tqwertyuiop[]\\";
+    char middle_row[] = "Casdfghjkl;'E";
+    char bottom_row[] = "Szxcvbnm,./S";
 
     build_up(c, top_row, " --- ");
     build_up_single(c, top_row);
